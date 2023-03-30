@@ -1,8 +1,13 @@
-import "utilities.css";
-import "style.css";
+import "./utilities.css";
+import "./style.css";
+import Game from "./components/Game/Game";
 
 function App() {
-  return <div className="App"></div>;
+  return (
+    <div className="App">
+      <Game />
+    </div>
+  );
 }
 
 export default App;

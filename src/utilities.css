@@ -1,0 +1,56 @@
+@supports not (font-variation-settings: normal) {
+  @font-face {
+    font-family: space;
+    src: url("./assets/fonts/static/SpaceGrotesk-Medium.ttf");
+    font-weight: normal;
+  }
+
+  @font-face {
+    font-family: space;
+    src: url("./assets/fonts/static/SpaceGrotesk-Bold.ttf");
+    font-weight: bold;
+  }
+}
+
+@supports (font-variation-settings: normal) {
+  @font-face {
+    font-family: space;
+    src: url("./assets/fonts/SpaceGrotesk-VariableFont_wght.ttf");
+    font-weight: 100 1000;
+  }
+}
+
+.heading-l {
+  font-family: space;
+  font-weight: bold;
+  font-size: 56px;
+  line-height: 71px;
+}
+
+.heading-m {
+  font-family: space;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 31px;
+}
+
+.heading-s {
+  font-family: space;
+  font-weight: bolc;
+  font-size: 20px;
+  line-height: 26px;
+}
+
+.heading-xs {
+  font-family: space;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 21px;
+}
+
+.body {
+  font-family: space;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 21px;
+}
