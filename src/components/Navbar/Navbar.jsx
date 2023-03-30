@@ -1,7 +1,7 @@
 import SCNavbar from "./Navbar.styled";
 import logo from "../../assets/images/logo.svg";
 
-export default function Nabvar({ pause_game, restart_game }) {
+export default function Navbar({ pause_game, restart_game }) {
   return (
     <SCNavbar>
       <button onClick={pause_game}>MENU</button>
