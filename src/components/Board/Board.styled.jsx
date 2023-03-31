@@ -6,6 +6,8 @@ const SCBoard = styled.div`
   grid-template-rows: repeat(6, 1fr);
   gap: 10px;
   position: relative;
+  --x: 0;
+  --y: 0;
 
   span {
     width: 50px;
@@ -17,6 +19,11 @@ const SCBoard = styled.div`
 
     &.empty {
       background: rebeccapurple;
+    }
+
+    &.red,
+    &.yellow {
+      animation: fade-in 0.325s forwards;
     }
 
     &.red {
@@ -48,6 +55,52 @@ const SCBoard = styled.div`
       left: 10px;
       opacity: 0;
       transition: transform 0.33s, opacity 0.33s;
+    }
+
+    &.counter {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      top: -50px;
+      left: 0;
+      opacity: 0;
+
+      &.red {
+        background: red;
+      }
+
+      &.yellow {
+        background: #dddd08;
+      }
+
+      &.active {
+        opacity: 1;
+        animation: anime 0.33s forwards;
+      }
+
+      @keyframes anime {
+        from {
+          transform: translate(var(--x), 0);
+        }
+
+        to {
+          transform: translate(var(--x), calc(var(--y) + 50px));
+        }
+      }
+    }
+
+    @keyframes fade-in {
+      from {
+        background: rebeccapurple;
+      }
+
+      99% {
+        background: rebeccapurple;
+      }
+
+      to {
+        background: auto;
+      }
     }
 
     @media screen and (min-width: 900px) {

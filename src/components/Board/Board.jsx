@@ -7,6 +7,7 @@ export default function Board({ turn, change_turn, locked }) {
   const width = 7;
   const height = 6;
   const [state, setState] = useState(new Array(width * height).fill("empty"));
+  const [active, sestActive] = useState(false);
   const markerRef = useRef(null);
 
   function handle_click(event) {
@@ -15,6 +16,7 @@ export default function Board({ turn, change_turn, locked }) {
     let updated, win;
 
     if (empty !== undefined) {
+      move_counter(empty);
       updated = state.map((item, itemIndex) =>
         itemIndex === empty ? turn : item
       );
@@ -44,6 +46,21 @@ export default function Board({ turn, change_turn, locked }) {
     markerRef.current.style.transform = `translateX(${offset}px)`;
   }
 
+  function move_counter(index) {
+    const span = document.querySelector(`[data-index='${index}']`);
+    const parent = span.parentElement;
+    const spanBox = span.getBoundingClientRect();
+    const parentBox = parent.getBoundingClientRect();
+    const xOffset = spanBox.left - parentBox.left;
+    const yOffset = spanBox.top - parentBox.top;
+
+    sestActive(true);
+    setTimeout(() => sestActive(false), 330);
+
+    parent.style.setProperty("--x", `${xOffset}px`);
+    parent.style.setProperty("--y", `${yOffset}px`);
+  }
+
   return (
     <SCBoard>
       {state.map((item, index) => (
@@ -56,6 +73,11 @@ export default function Board({ turn, change_turn, locked }) {
         ></span>
       ))}
       <span ref={markerRef} className="marker"></span>
+      <span
+        className={`counter ${active ? "active" : ""} ${
+          turn === "red" ? "yellow" : "red"
+        }`}
+      ></span>
     </SCBoard>
   );
 }

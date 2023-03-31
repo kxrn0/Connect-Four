@@ -21,9 +21,12 @@ export default function Game() {
   const [yellowPlayer, setYellowPlayer] = useState(null);
 
   const [games, setGames] = useState(0);
+  const [restarts, setRestarts] = useState(0);
   const [turn, setTurn] = useState(!(games % 2) ? RED : YELLOW);
   const [gameOver, setGameOver] = useState(false);
   const [timeLeft, setTimeLeft] = useState(TURN_TIME);
+  const [prevWinner, setPrevWinner] = useState(null);
+  const [locked, setLocked] = useState(false);
   const intervalIdRef = useRef(null);
 
   function new_game() {
@@ -34,7 +37,6 @@ export default function Game() {
   }
 
   function set_game(mode) {
-    console.log(mode);
     setStart(false);
     setRedPlayer({ name: mode === "player" ? "player 1" : "you", score: 0 });
     setYellowPlayer({ name: mode === "player" ? "player 2" : "cpu", score: 0 });
@@ -47,7 +49,25 @@ export default function Game() {
   }
 
   function restart_game() {
-    console.log("restart");
+    if (gameOver && prevWinner) {
+      if (prevWinner === "red")
+        setRedPlayer((prevState) => ({
+          ...prevState,
+          score: prevState.score - 1,
+        }));
+      else
+        setYellowPlayer((prevState) => ({
+          ...prevState,
+          score: prevState.score - 1,
+        }));
+    }
+
+    clearInterval(intervalIdRef.current);
+    setGameOver(false);
+    setPaused(false);
+    setTurn(() => (!(games % 2) ? RED : YELLOW));
+    intervene(TURN_TIME);
+    setRestarts((prevRestarts) => prevRestarts + 1);
   }
 
   function quit_game() {
@@ -70,7 +90,7 @@ export default function Game() {
     intervalIdRef.current = setInterval(() => {
       console.log(`in interval ${Math.random()}`);
       setTimeLeft((prevTime) => {
-        console.log(`time: ${prevTime}`)
+        console.log(`time: ${prevTime}`);
         if (prevTime <= 0) change_turn(null);
 
         return prevTime - 1;
@@ -81,8 +101,9 @@ export default function Game() {
   function change_turn(winner) {
     clearInterval(intervalIdRef.current);
     if (winner) {
-      console.log(`winner: ${winner}`);
+      setPrevWinner(winner);
       setGameOver(true);
+
       if (winner === RED)
         setRedPlayer((prevState) => ({
           ...prevState,
@@ -122,7 +143,7 @@ export default function Game() {
           <section>
             <Player name={redPlayer.name} score={redPlayer.score} />
             <Board
-              key={games}
+              key={`${games}-${restarts}`}
               turn={turn}
               change_turn={change_turn}
               locked={gameOver}
@@ -139,7 +160,6 @@ export default function Game() {
       ) : (
         <p>Game is being set up, please wait warmly</p>
       )}
-
       <Dialog shown={showRules} close={() => setShowRules(false)} tint={true}>
         <Rules close={() => setShowRules(false)} />
       </Dialog>
