@@ -1,12 +1,13 @@
 import SCBoard from "./Board.styled";
 import check_for_win from "../../utilities/win";
 import get_empty from "../../utilities/empty_index";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function Board({ turn, change_turn, locked }) {
   const width = 7;
   const height = 6;
   const [state, setState] = useState(new Array(width * height).fill("empty"));
+  const markerRef = useRef(null);
 
   function handle_click(event) {
     const index = Number(event.target.dataset.index);
@@ -31,6 +32,18 @@ export default function Board({ turn, change_turn, locked }) {
     }
   }
 
+  function move_marker(event) {
+    if (window.innerWidth < 900) return;
+
+    const span = event.target;
+    const parent = span.parentElement;
+    const spanBox = span.getBoundingClientRect();
+    const parentBox = parent.getBoundingClientRect();
+    const offset = spanBox.left - parentBox.left;
+
+    markerRef.current.style.transform = `translateX(${offset}px)`;
+  }
+
   return (
     <SCBoard>
       {state.map((item, index) => (
@@ -39,8 +52,10 @@ export default function Board({ turn, change_turn, locked }) {
           className={item}
           data-index={index}
           onClick={locked ? null : handle_click}
+          onMouseEnter={move_marker}
         ></span>
       ))}
+      <span ref={markerRef} className="marker"></span>
     </SCBoard>
   );
 }
