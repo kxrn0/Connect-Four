@@ -10,9 +10,11 @@ import SCGame from "./Game.styled";
 import { useState, useRef } from "react";
 
 export default function Game() {
-  const TURN_TIME = 5;
+  const TURN_TIME = 3;
   const YELLOW = "yellow";
   const RED = "red";
+  const AI = "ai";
+  const PLAYER = "player";
 
   const [start, setStart] = useState(true);
   const [showRules, setShowRules] = useState(false);
@@ -26,7 +28,8 @@ export default function Game() {
   const [gameOver, setGameOver] = useState(false);
   const [timeLeft, setTimeLeft] = useState(TURN_TIME);
   const [prevWinner, setPrevWinner] = useState(null);
-  const [locked, setLocked] = useState(false);
+  // const [locked, setLocked] = useState(false);
+  const [mode, setMode] = useState("player");
   const intervalIdRef = useRef(null);
 
   function new_game() {
@@ -37,9 +40,10 @@ export default function Game() {
   }
 
   function set_game(mode) {
+    setMode(mode);
     setStart(false);
-    setRedPlayer({ name: mode === "player" ? "player 1" : "you", score: 0 });
-    setYellowPlayer({ name: mode === "player" ? "player 2" : "cpu", score: 0 });
+    setRedPlayer({ name: mode === PLAYER ? "player 1" : "you", score: 0 });
+    setYellowPlayer({ name: mode === PLAYER ? "player 2" : "cpu", score: 0 });
     intervene(TURN_TIME);
   }
 
@@ -88,9 +92,9 @@ export default function Game() {
   function intervene(time) {
     setTimeLeft(time);
     intervalIdRef.current = setInterval(() => {
-      console.log(`in interval ${Math.random()}`);
+      // console.log(`in interval ${Math.random()}`);
       setTimeLeft((prevTime) => {
-        console.log(`time: ${prevTime}`);
+        // console.log(`time: ${prevTime}`);
         if (prevTime <= 0) change_turn(null);
 
         return prevTime - 1;
@@ -115,6 +119,25 @@ export default function Game() {
           score: prevState.score + 1,
         }));
     } else {
+      // if (mode === AI && turn === RED) {
+      //   const time = ~~(Math.random() * 5000);
+
+      //   setLocked(true);
+
+      //   // cell.click();
+
+      //   console.log("locking");
+
+      //   setTimeout(() => {
+      //     const cells = [...document.querySelectorAll("span.empty")];
+      //     const cell = cells[~~(Math.random() * cells.length)];
+      //     console.log("clicking");
+      //     console.log(cell);
+      //     cell.click();
+      //     setLocked(false);
+      //   }, time);
+      // }
+
       setTurn((prevTurn) => (prevTurn === RED ? YELLOW : RED));
       intervene(TURN_TIME);
     }
@@ -122,9 +145,10 @@ export default function Game() {
 
   return (
     <SCGame>
+      {/* <p>{locked ? "locked" : ""}</p> */}
       <Dialog
         shown={start || paused}
-        close={!start ? () => setPaused(false) : null}
+        close={!start ? resume_game : null}
         tint={start}
       >
         {start ? (
@@ -147,6 +171,7 @@ export default function Game() {
               turn={turn}
               change_turn={change_turn}
               locked={gameOver}
+              mode={mode}
             />
             <Player name={yellowPlayer.name} score={yellowPlayer.score} />
             <Tab

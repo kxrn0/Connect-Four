@@ -109,6 +109,13 @@ const SCBoard = styled.div`
       }
     }
   }
+
+  .byme {
+    position: absolute;
+    inset: 0;
+    background: #eded1155;
+    z-index: 20;
+  }
 `;
 
 export default SCBoard;
