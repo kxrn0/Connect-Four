@@ -5,7 +5,7 @@ import ai from "../../utilities/ai";
 import random from "../../utilities/random";
 import { useEffect, useRef, useState } from "react";
 
-export default function Board({ turn, change_turn, locked, mode }) {
+export default function Board({ turn, change_turn, locked, mode, set_tie }) {
   const width = 7;
   const height = 6;
   const [state, setState] = useState(new Array(width * height).fill("empty"));
@@ -35,6 +35,8 @@ export default function Board({ turn, change_turn, locked, mode }) {
 
       setState(updated);
       change_turn(win ? turn : null);
+
+      if (!win && updated.every((item) => item !== "empty")) set_tie();
     }
   }
 

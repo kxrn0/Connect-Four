@@ -29,6 +29,7 @@ export default function Game() {
   const [timeLeft, setTimeLeft] = useState(TURN_TIME);
   const [prevWinner, setPrevWinner] = useState(null);
   const [mode, setMode] = useState("player");
+  const [tie, setTie] = useState(false);
   const intervalIdRef = useRef(null);
   const lockNavbar = mode === "ai" && turn === "yellow" && !gameOver;
 
@@ -123,6 +124,11 @@ export default function Game() {
     }
   }
 
+  function set_tie() {
+    clearInterval(intervalIdRef.current);
+    setTie(true);
+  }
+
   return (
     <SCGame>
       <Dialog
@@ -155,6 +161,7 @@ export default function Game() {
               change_turn={change_turn}
               locked={gameOver}
               mode={mode}
+              set_tie={set_tie}
             />
             <Player name={yellowPlayer.name} score={yellowPlayer.score} />
             <Tab
