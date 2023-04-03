@@ -4,26 +4,38 @@ const SCBoard = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(6, 1fr);
-  gap: 10px;
+  gap: 24px;
+  padding: 20px;
   position: relative;
   --x: 0;
   --y: 0;
 
+  .layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+
+    &.top {
+      z-index: 1;
+    }
+  }
+
   span {
-    width: 50px;
-    height: 50px;
+    width: 64px;
+    height: 64px;
     display: grid;
     place-items: center;
     border-radius: 100%;
     position: relative;
 
     &.empty {
-      background: rebeccapurple;
+      background: transparent;
     }
 
     &.red,
     &.yellow {
-      animation: fade-in 0.325s forwards;
+      animation: fade-in .33s forwards;
     }
 
     &.red {
@@ -58,10 +70,10 @@ const SCBoard = styled.div`
     }
 
     &.counter {
-      width: 50px;
-      height: 50px;
+      width: 64px;
+      height: 64px;
       position: absolute;
-      top: -50px;
+      top: -64px;
       left: 0;
       opacity: 0;
 
@@ -75,7 +87,7 @@ const SCBoard = styled.div`
 
       &.active {
         opacity: 1;
-        animation: anime 0.33s forwards;
+        animation: anime .33s forwards;
       }
 
       @keyframes anime {
@@ -84,18 +96,27 @@ const SCBoard = styled.div`
         }
 
         to {
-          transform: translate(var(--x), calc(var(--y) + 50px));
+          transform: translate(var(--x), calc(var(--y) + 64px));
         }
       }
     }
 
+    &.lock {
+      background: #f44e4e99;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      z-index: 1;
+    }
+
     @keyframes fade-in {
       from {
-        background: rebeccapurple;
+        background: transparent;
       }
 
       99% {
-        background: rebeccapurple;
+        background: transparent;
       }
 
       to {
@@ -108,13 +129,6 @@ const SCBoard = styled.div`
         opacity: 1;
       }
     }
-  }
-
-  .byme {
-    position: absolute;
-    inset: 0;
-    background: #eded1155;
-    z-index: 20;
   }
 `;
 

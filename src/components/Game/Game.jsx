@@ -10,7 +10,7 @@ import SCGame from "./Game.styled";
 import { useState, useRef } from "react";
 
 export default function Game() {
-  const TURN_TIME = 5;
+  const TURN_TIME = 30;
   const YELLOW = "yellow";
   const RED = "red";
   const AI = "ai";
@@ -93,9 +93,7 @@ export default function Game() {
   function intervene(time) {
     setTimeLeft(time);
     intervalIdRef.current = setInterval(() => {
-      // console.log(`in interval ${Math.random()}`);
       setTimeLeft((prevTime) => {
-        // console.log(`time: ${prevTime}`);
         if (prevTime <= 0) change_turn(null);
 
         return prevTime - 1;
@@ -120,7 +118,6 @@ export default function Game() {
           score: prevState.score + 1,
         }));
     } else {
-      // console.log(`prevturn: ${turn} ${Math.random()}`);
       setTurn((prevTurn) => (prevTurn === RED ? YELLOW : RED));
       intervene(TURN_TIME);
     }

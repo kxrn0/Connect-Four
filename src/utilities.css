@@ -61,3 +61,14 @@
   font-size: 16px;
   line-height: 21px;
 }
+
+.buttong {
+  width: 400px;
+  height: 72px;
+  border-radius: 20px;
+}
+
+.bordered {
+  border: 3px solid black;
+  box-shadow: 0 10px 0 black;
+}

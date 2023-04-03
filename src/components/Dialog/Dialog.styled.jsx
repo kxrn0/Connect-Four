@@ -13,7 +13,7 @@ const SCDialog = styled.div`
   }
 
   .backdrop.tinted {
-    background: black;
+    background: var(--purple);
   }
 
   .backdrop.transparent {
@@ -28,7 +28,7 @@ const SCDialog = styled.div`
     transition: transform var(--duration);
     display: grid;
     place-items: center;
-    min-width: 655px;
+    /* min-width: 480px; */
   }
 
   .container::-webkit-scrollbar {
@@ -46,13 +46,13 @@ const SCDialog = styled.div`
     }
   }
 
-  @media screen and (max-width: 500px) {
+  /* @media screen and (max-width: 500px) {
     & {
       .container {
         min-width: 330px;
       }
     }
-  }
+  } */
 `;
 
 export default SCDialog;

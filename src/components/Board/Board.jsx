@@ -2,8 +2,8 @@ import SCBoard from "./Board.styled";
 import check_for_win from "../../utilities/win";
 import get_empty from "../../utilities/empty_index";
 import ai from "../../utilities/ai";
-import { useEffect, useRef, useState } from "react";
 import random from "../../utilities/random";
+import { useEffect, useRef, useState } from "react";
 
 export default function Board({ turn, change_turn, locked, mode }) {
   const width = 7;
@@ -12,6 +12,7 @@ export default function Board({ turn, change_turn, locked, mode }) {
   const [active, sestActive] = useState(false);
   const [selfLocked, setSelfLocked] = useState(false);
   const markerRef = useRef(null);
+  const counterColor = locked ? turn : turn === "red" ? "yellow" : "red";
 
   function handle_change(index, state, turn) {
     const emptyIndex = get_empty(index, state, width, height);
@@ -64,7 +65,11 @@ export default function Board({ turn, change_turn, locked, mode }) {
     const yOffset = spanBox.top - parentBox.top;
 
     sestActive(true);
-    setTimeout(() => sestActive(false), 330);
+    setSelfLocked(true);
+    setTimeout(() => {
+      sestActive(false);
+      setSelfLocked(false);
+    }, 330);
 
     parent.style.setProperty("--x", `${xOffset}px`);
     parent.style.setProperty("--y", `${yOffset}px`);
@@ -73,10 +78,9 @@ export default function Board({ turn, change_turn, locked, mode }) {
   useEffect(() => {
     if (turn === "yellow" && mode === "ai") {
       const index = ai(state);
-      const time = random(1000, 5000);
+      const time = random(500, 1000);
       const id = setTimeout(() => {
         handle_change(index, state, turn);
-        setSelfLocked(false);
       }, time);
 
       setSelfLocked(true);
@@ -87,22 +91,34 @@ export default function Board({ turn, change_turn, locked, mode }) {
 
   return (
     <SCBoard>
-      {selfLocked ? <div className="byme"></div> : null}
+      <img
+        className="layer"
+        srcSet="/board-layer-black-large.svg 632w, /board-layer-black-small.svg 335w"
+        sizes="(max-width: 500px) 335px, 632px"
+        src="/board-layer-black-small.svg"
+        alt="board layer"
+      />
       {state.map((item, index) => (
         <span
           key={index}
           className={item}
           data-index={index}
-          onClick={locked || selfLocked ? null : handle_click}
+          onClick={locked ? null : handle_click}
           onMouseEnter={move_marker}
         ></span>
       ))}
+      <img
+        className="layer top"
+        srcSet="/board-layer-white-large.svg 632w, /board-layer-white-small.svg 335w"
+        sizes="(max-width: 500px) 335px, 632px"
+        src="/board-layer-black-small.svg"
+        alt="board layer"
+      />
       <span ref={markerRef} className="marker"></span>
       <span
-        className={`counter ${active ? "active" : ""} ${
-          turn === "red" ? "yellow" : "red"
-        }`}
+        className={`counter ${active ? "active" : ""} ${counterColor}`}
       ></span>
+      {selfLocked ? <span className="lock"></span> : null}
     </SCBoard>
   );
 }
