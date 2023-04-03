@@ -20,6 +20,13 @@
   }
 }
 
+.App {
+  --purple: #5c2dd5;
+  --blue: #7945ff;
+  --pink: #fd6687;
+  --yellow: #ffce67;
+}
+
 .heading-l {
   font-family: space;
   font-weight: bold;

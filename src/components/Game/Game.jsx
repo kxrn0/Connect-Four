@@ -10,7 +10,7 @@ import SCGame from "./Game.styled";
 import { useState, useRef } from "react";
 
 export default function Game() {
-  const TURN_TIME = 3;
+  const TURN_TIME = 5;
   const YELLOW = "yellow";
   const RED = "red";
   const AI = "ai";
@@ -28,14 +28,15 @@ export default function Game() {
   const [gameOver, setGameOver] = useState(false);
   const [timeLeft, setTimeLeft] = useState(TURN_TIME);
   const [prevWinner, setPrevWinner] = useState(null);
-  // const [locked, setLocked] = useState(false);
   const [mode, setMode] = useState("player");
   const intervalIdRef = useRef(null);
+  const lockNavbar = mode === "ai" && turn === "yellow" && !gameOver;
 
   function new_game() {
     setTurn(() => (!((games + 1) % 2) ? RED : YELLOW));
     setGames((prevGames) => prevGames + 1);
     setGameOver(false);
+    if (mode === "ai" && turn === "red") return;
     intervene(TURN_TIME);
   }
 
@@ -119,25 +120,7 @@ export default function Game() {
           score: prevState.score + 1,
         }));
     } else {
-      // if (mode === AI && turn === RED) {
-      //   const time = ~~(Math.random() * 5000);
-
-      //   setLocked(true);
-
-      //   // cell.click();
-
-      //   console.log("locking");
-
-      //   setTimeout(() => {
-      //     const cells = [...document.querySelectorAll("span.empty")];
-      //     const cell = cells[~~(Math.random() * cells.length)];
-      //     console.log("clicking");
-      //     console.log(cell);
-      //     cell.click();
-      //     setLocked(false);
-      //   }, time);
-      // }
-
+      // console.log(`prevturn: ${turn} ${Math.random()}`);
       setTurn((prevTurn) => (prevTurn === RED ? YELLOW : RED));
       intervene(TURN_TIME);
     }
@@ -145,7 +128,6 @@ export default function Game() {
 
   return (
     <SCGame>
-      {/* <p>{locked ? "locked" : ""}</p> */}
       <Dialog
         shown={start || paused}
         close={!start ? resume_game : null}
@@ -163,7 +145,11 @@ export default function Game() {
       </Dialog>
       {!start ? (
         <main>
-          <Navbar pause_game={pause_game} restart_game={restart_game} />
+          <Navbar
+            pause_game={pause_game}
+            restart_game={restart_game}
+            locked={lockNavbar}
+          />
           <section>
             <Player name={redPlayer.name} score={redPlayer.score} />
             <Board
