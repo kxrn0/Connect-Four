@@ -1,10 +1,11 @@
 import SCPlayer from "./Player.styled";
 
-export default function Player({ name, score }) {
+export default function Player({ name, score, mode }) {
   return (
-    <SCPlayer>
-      <h1 className="heading-l">{name}</h1>
-      <h3 className="heading-s">{score}</h3>
+    <SCPlayer className={`${mode} bordered`}>
+      <span className="pic"></span>
+      <h3 className="heading-s">{name}</h3>
+      <h1 className="heading-l">{score}</h1>
     </SCPlayer>
   );
 }

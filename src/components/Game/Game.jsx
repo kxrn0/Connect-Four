@@ -42,11 +42,12 @@ export default function Game() {
     intervene(TURN_TIME);
   }
 
+  // bug, remember to reset the turn when the user quits
   function set_game(mode) {
     setMode(mode);
     setStart(false);
-    setRedPlayer({ name: mode === PLAYER ? "player 1" : "you", score: 0 });
-    setYellowPlayer({ name: mode === PLAYER ? "player 2" : "cpu", score: 0 });
+    setRedPlayer({ name: mode === PLAYER ? "PLAYER 1" : "YOU", score: 0 });
+    setYellowPlayer({ name: mode === PLAYER ? "PLAYER 2" : "CPU", score: 0 });
     intervene(TURN_TIME);
   }
 
@@ -157,23 +158,30 @@ export default function Game() {
             restart_game={restart_game}
             locked={lockNavbar}
           />
-          <section>
-            <Player name={redPlayer.name} score={redPlayer.score} />
-            <Board
-              key={`${games}-${restarts}`}
-              turn={turn}
-              change_turn={change_turn}
-              locked={gameOver}
+          <section className="game-bits">
+            <Player name={redPlayer.name} score={redPlayer.score} mode={mode} />
+            <div className="board-container">
+              <Board
+                key={`${games}-${restarts}`}
+                turn={turn}
+                change_turn={change_turn}
+                locked={gameOver}
+                mode={mode}
+                set_tie={set_tie}
+              />
+              <Tab
+                gameOver={gameOver}
+                tie={tie}
+                turn={turn}
+                timeLeft={timeLeft}
+                new_game={new_game}
+                mode={mode}
+              />
+            </div>
+            <Player
+              name={yellowPlayer.name}
+              score={yellowPlayer.score}
               mode={mode}
-              set_tie={set_tie}
-            />
-            <Player name={yellowPlayer.name} score={yellowPlayer.score} />
-            <Tab
-              gameOver={gameOver}
-              tie={tie}
-              turn={turn}
-              timeLeft={timeLeft}
-              new_game={new_game}
             />
           </section>
         </main>

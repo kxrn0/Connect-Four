@@ -3,6 +3,7 @@ import check_for_win from "../../utilities/win";
 import get_empty from "../../utilities/empty_index";
 import ai from "../../utilities/ai";
 import random from "../../utilities/random";
+import { ReactComponent as Marker } from "../../assets/images/marker.svg";
 import { useEffect, useRef, useState } from "react";
 
 export default function Board({ turn, change_turn, locked, mode, set_tie }) {
@@ -47,7 +48,7 @@ export default function Board({ turn, change_turn, locked, mode, set_tie }) {
   }
 
   function move_marker(event) {
-    if (window.innerWidth < 900) return;
+    if (!window.matchMedia("(hover: hover)".match)) return;
 
     const span = event.target;
     const parent = span.parentElement;
@@ -116,7 +117,9 @@ export default function Board({ turn, change_turn, locked, mode, set_tie }) {
         src="/board-layer-black-small.svg"
         alt="board layer"
       />
-      <span ref={markerRef} className="marker"></span>
+      <span ref={markerRef} className={`marker ${turn}`}>
+        <Marker />
+      </span>
       <span
         className={`counter ${active ? "active" : ""} ${counterColor}`}
       ></span>

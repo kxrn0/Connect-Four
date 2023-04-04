@@ -5,7 +5,7 @@ export default function Start({ show_rules, set_game }) {
   return (
     <SCStart className="bordered">
       <img src={logo} className="logo" alt="company logo" />
-      <div>
+      <div className="buttons">
         <button
           className="buttong bordered heading-m imagined ai"
           onClick={() => set_game("ai")}

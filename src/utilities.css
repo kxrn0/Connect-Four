@@ -43,7 +43,7 @@
 
 .heading-s {
   font-family: space;
-  font-weight: bolc;
+  font-weight: bold;
   font-size: 20px;
   line-height: 26px;
 }
@@ -57,7 +57,7 @@
 
 .body {
   font-family: space;
-  font-weight: normal;
+  font-weight: 500;
   font-size: 16px;
   line-height: 21px;
 }
@@ -68,8 +68,41 @@
   border-radius: 20px;
 }
 
-.bordered {
-  outline: 3px solid black;
-  box-shadow: 0 10px 0 black;
+.game-button {
+  background: var(--purple);
+  color: white;
+  border-radius: 100px;
   border: none;
+  padding: 10px 20px;
+  transition: background-color 0.33s;
+}
+
+.game-button:disabled {
+  background: #8d9dc9;
+  color: gray;
+}
+
+.bordered {
+  border: 3px solid black;
+  box-shadow: 0 10px 0 black;
+  transition: box-shadow 0.33s, border-color 0.33s;
+}
+
+@media (hover: hover) {
+  .game-button:hover {
+    background: var(--pink);
+  }
+
+  button.bordered:hover {
+    box-shadow: 0 10px 0 var(--purple);
+    border-color: var(--purple);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .buttong {
+    width: 100%;
+    text-align: start;
+    padding-left: 20px;
+  }
 }

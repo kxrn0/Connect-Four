@@ -3,11 +3,9 @@ import redLarge from "../../assets/images/counter-red-large.svg";
 import yellowLarge from "../../assets/images/counter-yellow-large.svg";
 import redSmall from "../../assets/images/counter-red-small.svg";
 import yellowSmall from "../../assets/images/counter-yellow-small.svg";
-import redMarker from "../../assets/images/marker-red.svg";
-import yellowMarker from "../../assets/images/marker-yellow.svg";
 
 const SCBoard = styled.div`
-  --max-width: 1000px;
+  --max-width: 500px;
   --x: 0;
   --y: 0;
   --diameter: 64px;
@@ -30,6 +28,7 @@ const SCBoard = styled.div`
   }
 
   span {
+    background-size: cover;
     width: var(--diameter);
     height: var(--diameter);
     display: grid;
@@ -43,6 +42,9 @@ const SCBoard = styled.div`
 
     &.red,
     &.yellow {
+      /* 
+        ---anime---
+      */
       animation: fade-in 0.3s forwards;
     }
 
@@ -75,14 +77,30 @@ const SCBoard = styled.div`
     }
 
     &.marker {
-      background: #f5f7fa;
-      width: 30px;
-      height: 30px;
+      background: transparent;
+      width: 38px;
+      height: 36px;
       position: absolute;
-      bottom: calc(100% + 10px);
-      left: 17px;
+      bottom: calc(100% + 2px);
+      left: calc(var(--diameter) / 2 - 19px);
       opacity: 0;
       transition: transform 0.33s, opacity 0.33s;
+
+      &.red {
+        svg {
+          #main-path {
+            fill: var(--pink);
+          }
+        }
+      }
+
+      &.yellow {
+        svg {
+          #main-path {
+            fill: var(--yellow);
+          }
+        }
+      }
     }
 
     &.counter {
@@ -109,6 +127,9 @@ const SCBoard = styled.div`
 
       &.active {
         opacity: 1;
+        /* 
+          ---anime---
+        */
         animation: anime 0.33s forwards;
       }
 
@@ -118,7 +139,7 @@ const SCBoard = styled.div`
         }
 
         to {
-          transform: translate(var(--x), calc(var(--y) + var(--diameter)));
+          transform: translate(var(--x), var(--y));
         }
       }
     }
@@ -145,7 +166,7 @@ const SCBoard = styled.div`
       }
     }
 
-    @media screen and (min-width: var(--max-width)) {
+    @media (hover: hover) {
       &:hover ~ .marker {
         opacity: 1;
       }

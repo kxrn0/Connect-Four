@@ -55,6 +55,18 @@ const SCStart = styled.div`
       height: 46px;
     }
   }
+
+  @media screen and (max-width: 500px) {
+    background: transparent;
+    width: 100vw;
+    border: none;
+    box-shadow: none;
+    padding: 20px;
+
+    .buttons {
+      width: 100%;
+    }
+  }
 `;
 
 export default SCStart;
