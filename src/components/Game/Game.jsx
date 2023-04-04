@@ -37,6 +37,7 @@ export default function Game() {
     setTurn(() => (!((games + 1) % 2) ? RED : YELLOW));
     setGames((prevGames) => prevGames + 1);
     setGameOver(false);
+    setTie(false);
     if (mode === "ai" && turn === "red") return;
     intervene(TURN_TIME);
   }
@@ -71,6 +72,7 @@ export default function Game() {
     clearInterval(intervalIdRef.current);
     setGameOver(false);
     setPaused(false);
+    setTie(false);
     setTurn(() => (!(games % 2) ? RED : YELLOW));
     intervene(TURN_TIME);
     setRestarts((prevRestarts) => prevRestarts + 1);
@@ -81,6 +83,7 @@ export default function Game() {
     setGames(0);
     setGameOver(false);
     setPaused(false);
+    setTie(false);
     setTimeout(() => {
       setStart(true);
     }, 330);
@@ -126,6 +129,7 @@ export default function Game() {
 
   function set_tie() {
     clearInterval(intervalIdRef.current);
+    setGameOver(true);
     setTie(true);
   }
 
@@ -166,6 +170,7 @@ export default function Game() {
             <Player name={yellowPlayer.name} score={yellowPlayer.score} />
             <Tab
               gameOver={gameOver}
+              tie={tie}
               turn={turn}
               timeLeft={timeLeft}
               new_game={new_game}

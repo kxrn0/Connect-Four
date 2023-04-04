@@ -69,6 +69,7 @@
 }
 
 .bordered {
-  border: 3px solid black;
+  outline: 3px solid black;
   box-shadow: 0 10px 0 black;
+  border: none;
 }

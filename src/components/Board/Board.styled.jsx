@@ -1,14 +1,22 @@
 import styled from "styled-components";
+import redLarge from "../../assets/images/counter-red-large.svg";
+import yellowLarge from "../../assets/images/counter-yellow-large.svg";
+import redSmall from "../../assets/images/counter-red-small.svg";
+import yellowSmall from "../../assets/images/counter-yellow-small.svg";
+import redMarker from "../../assets/images/marker-red.svg";
+import yellowMarker from "../../assets/images/marker-yellow.svg";
 
 const SCBoard = styled.div`
+  --max-width: 1000px;
+  --x: 0;
+  --y: 0;
+  --diameter: 64px;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(6, 1fr);
   gap: 24px;
   padding: 20px;
   position: relative;
-  --x: 0;
-  --y: 0;
 
   .layer {
     position: absolute;
@@ -22,8 +30,8 @@ const SCBoard = styled.div`
   }
 
   span {
-    width: 64px;
-    height: 64px;
+    width: var(--diameter);
+    height: var(--diameter);
     display: grid;
     place-items: center;
     border-radius: 100%;
@@ -35,15 +43,23 @@ const SCBoard = styled.div`
 
     &.red,
     &.yellow {
-      animation: fade-in .33s forwards;
+      animation: fade-in 0.3s forwards;
     }
 
     &.red {
-      background: red;
+      background-image: url(${redLarge});
+
+      @media screen and (max-width: var(--max-width)) {
+        background-image: url(${redSmall});
+      }
     }
 
     &.yellow {
-      background: #dddd08;
+      background-image: url(${yellowLarge});
+
+      @media screen and (max-width: var(--max-width)) {
+        background-image: url(${yellowSmall});
+      }
     }
 
     &.winner::after {
@@ -64,30 +80,36 @@ const SCBoard = styled.div`
       height: 30px;
       position: absolute;
       bottom: calc(100% + 10px);
-      left: 10px;
+      left: 17px;
       opacity: 0;
       transition: transform 0.33s, opacity 0.33s;
     }
 
     &.counter {
-      width: 64px;
-      height: 64px;
       position: absolute;
-      top: -64px;
+      top: calc(- var(--diameter));
       left: 0;
       opacity: 0;
 
       &.red {
-        background: red;
+        background-image: url(${redLarge});
+
+        @media screen and (max-width: var(--max-width)) {
+          background-image: url(${redSmall});
+        }
       }
 
       &.yellow {
-        background: #dddd08;
+        background-image: url(${yellowLarge});
+
+        @media screen and (max-width: var(--max-width)) {
+          background-image: url(${yellowSmall});
+        }
       }
 
       &.active {
         opacity: 1;
-        animation: anime .33s forwards;
+        animation: anime 0.33s forwards;
       }
 
       @keyframes anime {
@@ -96,13 +118,12 @@ const SCBoard = styled.div`
         }
 
         to {
-          transform: translate(var(--x), calc(var(--y) + 64px));
+          transform: translate(var(--x), calc(var(--y) + var(--diameter)));
         }
       }
     }
 
     &.lock {
-      background: #f44e4e99;
       position: absolute;
       width: 100%;
       height: 100%;
@@ -124,7 +145,7 @@ const SCBoard = styled.div`
       }
     }
 
-    @media screen and (min-width: 900px) {
+    @media screen and (min-width: var(--max-width)) {
       &:hover ~ .marker {
         opacity: 1;
       }
