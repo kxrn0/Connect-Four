@@ -96,9 +96,9 @@ export default function Board({ turn, change_turn, locked, mode, set_tie }) {
     <SCBoard>
       <img
         className="layer"
-        srcSet="/board-layer-black-large.svg 632w, /board-layer-black-small.svg 335w"
+        srcSet="/Connect-Four/board-layer-black-large.svg 632w, /Connect-Four/board-layer-black-small.svg 335w"
         sizes="(max-width: 500px) 335px, 632px"
-        src="/board-layer-black-small.svg"
+        src="/Connect-Four/board-layer-black-small.svg"
         alt="board layer"
       />
       {state.map((item, index) => (
@@ -112,9 +112,9 @@ export default function Board({ turn, change_turn, locked, mode, set_tie }) {
       ))}
       <img
         className="layer top"
-        srcSet="/board-layer-white-large.svg 632w, /board-layer-white-small.svg 335w"
+        srcSet="/Connect-Four/board-layer-white-large.svg 632w, /Connect-Four/board-layer-white-small.svg 335w"
         sizes="(max-width: 500px) 335px, 632px"
-        src="/board-layer-black-small.svg"
+        src="/Connect-Four/board-layer-black-small.svg"
         alt="board layer"
       />
       <span ref={markerRef} className={`marker ${turn}`}>
