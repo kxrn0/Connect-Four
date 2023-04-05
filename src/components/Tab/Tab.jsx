@@ -17,13 +17,14 @@ export default function Tab({ gameOver, tie, turn, timeLeft, new_game, mode }) {
       : turn === "red"
       ? "PLAYER 1"
       : "PLAYER 2";
+  const win = mode === "ai" && turn === "red" ? "WIN" : "WINS";
 
   return (
     <SCTab>
       {gameOver ? (
         <div className="win bordered">
           <p className="heading-xs">{tie ? "NOBODY WINS!" : winner}</p>
-          <h1 className="heading-l">{tie ? "TIE" : "WINS"}</h1>
+          <h1 className="heading-l">{tie ? "TIE" : win}</h1>
           <button className="heading-xs game-button" onClick={new_game}>
             PLAY AGAIN
           </button>
