@@ -11,20 +11,14 @@ import { useState, useRef } from "react";
 
 export default function Game() {
   const TURN_TIME = 30;
-  const YELLOW = "yellow";
-  const RED = "red";
-  const AI = "ai";
-  const PLAYER = "player";
-
   const [start, setStart] = useState(true);
   const [showRules, setShowRules] = useState(false);
   const [paused, setPaused] = useState(false);
   const [redPlayer, setRedPlayer] = useState(null);
   const [yellowPlayer, setYellowPlayer] = useState(null);
-
   const [games, setGames] = useState(0);
   const [restarts, setRestarts] = useState(0);
-  const [turn, setTurn] = useState(!(games % 2) ? RED : YELLOW);
+  const [turn, setTurn] = useState(!(games % 2) ? "red" : "yellow");
   const [gameOver, setGameOver] = useState(false);
   const [timeLeft, setTimeLeft] = useState(TURN_TIME);
   const [prevWinner, setPrevWinner] = useState(null);
@@ -34,7 +28,7 @@ export default function Game() {
   const lockNavbar = mode === "ai" && turn === "yellow" && !gameOver;
 
   function new_game() {
-    setTurn(() => (!((games + 1) % 2) ? RED : YELLOW));
+    setTurn(() => (!((games + 1) % 2) ? "red" : "yellow"));
     setGames((prevGames) => prevGames + 1);
     setGameOver(false);
     setTie(false);
@@ -42,18 +36,14 @@ export default function Game() {
     intervene(TURN_TIME);
   }
 
-  // bug, remember to reset the turn when the user quits
   function set_game(mode) {
     setMode(mode);
     setStart(false);
-    setRedPlayer({ name: mode === PLAYER ? "PLAYER 1" : "YOU", score: 0 });
-    setYellowPlayer({ name: mode === PLAYER ? "PLAYER 2" : "CPU", score: 0 });
+    setGames(0);
+    setTurn("red");
+    setRedPlayer({ name: mode === "player" ? "PLAYER 1" : "YOU", score: 0 });
+    setYellowPlayer({ name: mode === "player" ? "PLAYER 2" : "CPU", score: 0 });
     intervene(TURN_TIME);
-  }
-
-  function resume_game() {
-    setPaused(false);
-    if (!gameOver) intervene(timeLeft);
   }
 
   function restart_game() {
@@ -74,9 +64,9 @@ export default function Game() {
     setGameOver(false);
     setPaused(false);
     setTie(false);
-    setTurn(() => (!(games % 2) ? RED : YELLOW));
-    intervene(TURN_TIME);
+    setTurn(() => (!(games % 2) ? "red" : "yellow"));
     setRestarts((prevRestarts) => prevRestarts + 1);
+    intervene(TURN_TIME);
   }
 
   function quit_game() {
@@ -88,6 +78,17 @@ export default function Game() {
     setTimeout(() => {
       setStart(true);
     }, 330);
+  }
+
+  function set_tie() {
+    clearInterval(intervalIdRef.current);
+    setGameOver(true);
+    setTie(true);
+  }
+
+  function resume_game() {
+    setPaused(false);
+    if (!gameOver) intervene(timeLeft);
   }
 
   function pause_game() {
@@ -112,7 +113,7 @@ export default function Game() {
       setPrevWinner(winner);
       setGameOver(true);
 
-      if (winner === RED)
+      if (winner === "red")
         setRedPlayer((prevState) => ({
           ...prevState,
           score: prevState.score + 1,
@@ -123,19 +124,14 @@ export default function Game() {
           score: prevState.score + 1,
         }));
     } else {
-      setTurn((prevTurn) => (prevTurn === RED ? YELLOW : RED));
+      setTurn((prevTurn) => (prevTurn === "red" ? "yellow" : "red"));
       intervene(TURN_TIME);
     }
   }
 
-  function set_tie() {
-    clearInterval(intervalIdRef.current);
-    setGameOver(true);
-    setTie(true);
-  }
-
   return (
     <SCGame>
+      <div className={`bottom ${gameOver ? turn : "neutral"}`}></div>
       <Dialog
         shown={start || paused}
         close={!start ? resume_game : null}

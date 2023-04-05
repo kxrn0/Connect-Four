@@ -101,6 +101,7 @@
 
 @media screen and (max-width: 500px) {
   .buttong {
+    min-width: 295px;
     width: 100%;
     text-align: start;
     padding-left: 20px;

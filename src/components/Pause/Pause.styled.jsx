@@ -28,6 +28,16 @@ const SCPause = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 500px) {
+    padding: 30px 20px;
+    padding-bottom: 30px;
+    gap: 30px;
+
+    .buttong {
+      text-align: center;
+    }
+  }
 `;
 
 export default SCPause;

@@ -42,9 +42,6 @@ const SCBoard = styled.div`
 
     &.red,
     &.yellow {
-      /* 
-        ---anime---
-      */
       animation: fade-in 0.3s forwards;
     }
 
@@ -67,13 +64,19 @@ const SCBoard = styled.div`
     &.winner::after {
       content: "";
       position: absolute;
-      width: 30px;
-      height: 30px;
-      border: 5px solid azure;
+      width: 34px;
+      height: 34px;
+      border: 6px solid azure;
       top: 50%;
       left: 50%;
       border-radius: 100%;
       transform: translate(-50%, -50%);
+
+      @media screen and (max-width: 500px) {
+        width: 20px;
+        height: 20px;
+        border: 6px solid azure;
+      }
     }
 
     &.marker {
@@ -127,9 +130,6 @@ const SCBoard = styled.div`
 
       &.active {
         opacity: 1;
-        /* 
-          ---anime---
-        */
         animation: anime 0.33s forwards;
       }
 
@@ -174,7 +174,7 @@ const SCBoard = styled.div`
   }
   @media screen and (max-width: 500px) {
     --diameter: 34px;
-    gap: 13px;
+    gap: 12.75px;
     padding: 10px;
   }
 `;

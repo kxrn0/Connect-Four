@@ -61,9 +61,7 @@ const SCPlayer = styled.div`
     gap: 20px;
 
     .pic {
-      /* bottom: 20px; */
       bottom: 50%;
-      transform: translateY(50%);
     }
 
     h1 {
@@ -76,7 +74,7 @@ const SCPlayer = styled.div`
 
       .pic {
         left: 0;
-        transform: translateX(-50%);
+        transform: translate(-50%, 50%);
       }
     }
 
@@ -85,7 +83,7 @@ const SCPlayer = styled.div`
 
       .pic {
         right: 0;
-        transform: translateX(50%);
+        transform: translate(50%, 50%);
       }
 
       h1 {
