@@ -172,6 +172,11 @@ const SCBoard = styled.div`
       }
     }
   }
+  @media screen and (max-width: 500px) {
+    --diameter: 34px;
+    gap: 13px;
+    padding: 10px;
+  }
 `;
 
 export default SCBoard;

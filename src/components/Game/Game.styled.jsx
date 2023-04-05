@@ -26,8 +26,8 @@ const SCGame = styled.div`
       grid-template-columns: auto auto;
       grid-template-rows: auto auto;
       justify-content: center;
-      /* column-gap: 10px; */
-      /* row-gap: 100px; */
+      column-gap: 40px;
+      row-gap: 32px;
 
       .player:first-child {
         grid-column: 1 / 2;
@@ -43,6 +43,13 @@ const SCGame = styled.div`
         grid-column: 1 / 3;
         grid-row: 2 / 3;
       }
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    .game-bits {
+      column-gap: 20px;
+      row-gap: 50px;
     }
   }
 `;

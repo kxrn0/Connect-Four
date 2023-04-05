@@ -53,7 +53,7 @@ const SCPlayer = styled.div`
     }
   }
 
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 1000px) {
     flex-direction: row;
     padding: 0;
     width: 270px;
@@ -61,7 +61,9 @@ const SCPlayer = styled.div`
     gap: 20px;
 
     .pic {
-      bottom: 20px;
+      /* bottom: 20px; */
+      bottom: 50%;
+      transform: translateY(50%);
     }
 
     h1 {
@@ -80,7 +82,6 @@ const SCPlayer = styled.div`
 
     &:last-child {
       padding-right: 44px;
-      /* background: red; */
 
       .pic {
         right: 0;
@@ -90,6 +91,38 @@ const SCPlayer = styled.div`
       h1 {
         order: -1;
       }
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 142px;
+    height: 80px;
+    gap: 0;
+    padding: 0;
+    flex-direction: column;
+    justify-self: center;
+
+    &:first-child {
+      padding: 0;
+    }
+
+    &:last-child {
+      padding: 0;
+
+      h1 {
+        order: 1;
+      }
+    }
+
+    .heading-l {
+      font-size: 32px;
+      line-height: 40px;
+      min-width: auto;
+    }
+
+    .heading-s {
+      font-size: 16px;
+      line-height: 20px;
     }
   }
 `;
