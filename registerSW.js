@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/Connect-Four/sw.js', { scope: '/Connect-Four/' })})}
